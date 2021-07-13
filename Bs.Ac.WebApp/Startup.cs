@@ -64,6 +64,7 @@ namespace Bs.Ac.WebApp
                     options.Scope.Add(OidcConstants.StandardScopes.OfflineAccess);
                     options.Scope.Add("bs.ac.api:read");
                     options.Scope.Add("bs.ac.api:write");
+                    options.Scope.Add("bs.ac.api:export");
                     options.Scope.Add("roles");
 
                 });
@@ -79,9 +80,13 @@ namespace Bs.Ac.WebApp
             services.AddHttpContextAccessor();
             services.AddScoped<BearerTokenHandler>();
             services.AddHttpClient("GeneralAccess");
-            services.AddHttpClient("ApiAccess", options =>
+            services.AddHttpClient("ApiAccessV1", options =>
             {
-                options.BaseAddress = new Uri(Configuration["Api:BaseAddress"]);
+                options.BaseAddress = new Uri(Configuration["Api:v1:BaseAddress"]);
+            }).AddHttpMessageHandler<BearerTokenHandler>();
+            services.AddHttpClient("ApiAccessV2", options =>
+            {
+                options.BaseAddress = new Uri(Configuration["Api:v2:BaseAddress"]);
             }).AddHttpMessageHandler<BearerTokenHandler>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }

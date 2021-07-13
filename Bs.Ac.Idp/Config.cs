@@ -27,12 +27,13 @@ namespace Bs.Ac.Idp
             new ApiScope[]
             {
                 new ApiScope("bs.ac.api:read","Bs.Ac.Api [Read Acess]"),
-                new ApiScope("bs.ac.api:write","Bs.Ac.Api [Write Access]")
+                new ApiScope("bs.ac.api:write","Bs.Ac.Api [Write Access]"),
+                new ApiScope("bs.ac.api:export","Bs.Ac.Api v2 [Export Access]")
             };
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new ApiResource("bs.ac.api","Basic Auth Code Api")
+                new ApiResource("bs.ac.api","Basic Auth Code Api v1 Endpoint")
                 {
                     Scopes =
                     {
@@ -41,6 +42,21 @@ namespace Bs.Ac.Idp
                     },
                     UserClaims =
                     {
+                        "name",
+                        "email",
+                        "role"
+                    }
+                },
+                new ApiResource("bs.ac.api.v2","Basic Auth Code Api v2 Endpoint")
+                {
+                    Scopes =
+                    {
+                        "bs.ac.api:export"
+                    },
+                    UserClaims =
+                    {
+                        "name",
+                        "email",
                         "role"
                     }
                 }
@@ -67,7 +83,8 @@ namespace Bs.Ac.Idp
                         IdentityServerConstants.StandardScopes.Email,
                         "roles",
                         "bs.ac.api:read",
-                        "bs.ac.api:write"
+                        "bs.ac.api:write",
+                        "bs.ac.api:export"
                     },
                     RedirectUris =
                     {

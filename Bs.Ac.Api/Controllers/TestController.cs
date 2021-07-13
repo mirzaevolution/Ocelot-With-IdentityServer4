@@ -14,9 +14,9 @@ namespace Bs.Ac.Api.Controllers
     public class TestController : ControllerBase
     {
         [HttpGet(nameof(ReadAccess))]
+        [Authorize(Roles = "owner, reader")]
         public IActionResult ReadAccess()
         {
-            var isReaderRole = User.IsInRole("reader");
             return Ok(new
             {
                 message = "Read-Access!"
@@ -26,9 +26,9 @@ namespace Bs.Ac.Api.Controllers
 
 
         [HttpGet(nameof(WriteAccess))]
+        [Authorize(Roles = "owner, writer")]
         public IActionResult WriteAccess()
         {
-            var isWriterRole = User.IsInRole("writer");
             return Ok(new
             {
                 message = "Write-Access!"

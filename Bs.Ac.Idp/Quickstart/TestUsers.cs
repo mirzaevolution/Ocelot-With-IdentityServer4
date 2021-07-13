@@ -31,6 +31,7 @@ namespace IdentityServerHost.Quickstart.UI
                             new Claim(JwtClaimTypes.Email, "admin@email.com"),
                             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                             new Claim(JwtClaimTypes.Role, "owner")
+
                         }
                     },
                     new TestUser
@@ -44,7 +45,9 @@ namespace IdentityServerHost.Quickstart.UI
                             new Claim(JwtClaimTypes.Email, "ghulamcyber@hotmail.com"),
                             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                             new Claim(JwtClaimTypes.Role, "reader", ClaimValueTypes.String),
-                            new Claim(JwtClaimTypes.Role, "writer", ClaimValueTypes.String)
+                            new Claim(JwtClaimTypes.Role, "writer", ClaimValueTypes.String),
+                            new Claim(JwtClaimTypes.Role, "export", ClaimValueTypes.String)
+
 
                         }
                     },
@@ -58,7 +61,8 @@ namespace IdentityServerHost.Quickstart.UI
                             new Claim(JwtClaimTypes.Name, "Rara Anjani"),
                             new Claim(JwtClaimTypes.Email, "raraanjani@hotmail.com"),
                             new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                            new Claim(JwtClaimTypes.Role, "reader")
+                            new Claim(JwtClaimTypes.Role, "reader"),
+                            new Claim(JwtClaimTypes.Role, "export", ClaimValueTypes.String)
                         }
                     }
                 };
