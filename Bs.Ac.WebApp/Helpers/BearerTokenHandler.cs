@@ -86,6 +86,7 @@ namespace Bs.Ac.WebApp.Helpers
                         CookieAuthenticationDefaults.AuthenticationScheme
                     );
                 currentAuthenticationProperties.Properties.StoreTokens(tokens);
+                
                 await _httpContextAccessor.HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme, 
                         currentAuthenticationProperties.Principal, 

@@ -34,10 +34,13 @@ namespace Bs.Cc.Api
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.Authority = Configuration["Idp:BaseUrl"];
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        ValidateAudience = false
-                    };
+
+                    options.Audience = "weather_api";
+
+                    //options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    //{
+                    //    ValidateAudience = false
+                    //};
                 });
             services.AddAuthorization(options =>
             {

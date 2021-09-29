@@ -80,10 +80,12 @@ namespace Bs.Ac.WebApp
             services.AddHttpContextAccessor();
             services.AddScoped<BearerTokenHandler>();
             services.AddHttpClient("GeneralAccess");
+
             services.AddHttpClient("ApiAccessV1", options =>
             {
                 options.BaseAddress = new Uri(Configuration["Api:v1:BaseAddress"]);
             }).AddHttpMessageHandler<BearerTokenHandler>();
+
             services.AddHttpClient("ApiAccessV2", options =>
             {
                 options.BaseAddress = new Uri(Configuration["Api:v2:BaseAddress"]);
