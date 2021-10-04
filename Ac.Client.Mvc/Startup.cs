@@ -37,6 +37,7 @@ namespace Ac.Client.Mvc
         public void ConfigureServices(IServiceCollection services)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme  = options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;

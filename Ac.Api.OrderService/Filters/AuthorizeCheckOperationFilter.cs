@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 namespace Ac.Api.OrderService.Filters
@@ -9,8 +10,8 @@ namespace Ac.Api.OrderService.Filters
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             bool hasAttribute =
-                context.MethodInfo.DeclaringType.GetCustomAttributes(true).Any() || 
-                context.MethodInfo.GetCustomAttributes(true).Any();
+                context.MethodInfo.DeclaringType.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any() || 
+                context.MethodInfo.GetCustomAttributes(true).OfType<AuthorizeAttribute>().Any();
             if (hasAttribute)
             {
                 operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });

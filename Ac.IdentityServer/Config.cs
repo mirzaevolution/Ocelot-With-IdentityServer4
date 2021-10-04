@@ -79,7 +79,7 @@ namespace Ac.IdentityServer
                     },
                     PostLogoutRedirectUris =
                     {
-                        "https://localhost:44390/signout-callback-oidc"
+                        "https://localhost:44393/signout-callback-oidc"
                     }
                 }
             };

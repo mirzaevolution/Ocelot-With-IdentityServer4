@@ -6,11 +6,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net.Http;
+using IdentityModel;
+using IdentityModel.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace Ac.Client.Mvc.Controllers
 {
     public class AuthController : Controller
     {
+        private readonly HttpClient _generalHttpClient;
+        private readonly IConfiguration _configuration;
+        public AuthController(
+                IHttpClientFactory generalHttpClient,
+                IConfiguration configuration
+            )
+        {
+            _generalHttpClient = generalHttpClient.CreateClient("General");
+            _configuration = configuration;
+        }
         public IActionResult Login()
         {
             return Challenge(new AuthenticationProperties
@@ -21,12 +36,24 @@ namespace Ac.Client.Mvc.Controllers
         }
 
         [Authorize]
-        public async Task Logout()
+        public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(new AuthenticationProperties
+           var endpointResponse = await _generalHttpClient.GetDiscoveryDocumentAsync(_configuration["Resources:IdentityServer:BaseUrl"]);
+            if (!endpointResponse.IsError)
+            {
+                var revokeResponse = await _generalHttpClient.RevokeTokenAsync(new TokenRevocationRequest
+                {
+                    Address = endpointResponse.RevocationEndpoint,
+                    ClientId = _configuration["Resources:IdentityServer:ClientId"],
+                    ClientSecret = _configuration["Resources:IdentityServer:ClientSecret"],
+                    Token = await HttpContext.GetTokenAsync(OidcConstants.TokenTypes.AccessToken)
+                });
+
+            }
+           return SignOut(new AuthenticationProperties
             {
                 RedirectUri = Url.Action("Index", "Home", null, HttpContext.Request.Scheme)
-            });
+            }, CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         [Authorize]
